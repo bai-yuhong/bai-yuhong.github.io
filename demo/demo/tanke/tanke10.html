@@ -1,0 +1,126 @@
+
+  
+    <!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="u-8">
+</head>
+<body onkeydown="getCommand()">
+<canvas id="tankMap" width="960px" height="600px" style="background-color:black">
+</canvas>
+<span id="aa">����</span>
+<span id="bb">����</span>
+<script type="text/javascript" src="tanke10.js"></script>
+<script type="text/javascript">
+var canvas1=document.getElementById("tankMap");
+var cxt=canvas1.getContext("2d");
+var map = [
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,2,2,2,2,2,2,2,2,2,0,0,0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,0,
+0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,
+0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,
+0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,
+0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,
+0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,
+0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,
+0,0,0,0,3,3,3,3,3,3,3,3,2,0,0,0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,
+0,0,0,0,2,1,1,1,1,1,1,1,2,0,0,0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+];
+//�ҵ�̹��
+var hero=new Hero(120,20,0,heroColor);
+//���ӵ�����
+var heroBullets=new Array();
+var enemyBullets=new Array();
+var bombs=new Array();
+//�������˵�̹��
+var enemyTanks=new Array();
+//���������ϰ���
+var obs=new Array();
+var besideHero=new Array();
+var all=new Array();
+var besideEnemy=new Array()
+for(var i=0;i<map.length;i++){
+	if(map[i]!=0){
+		var ob=new Obstacle(parseInt(i%32)*30,parseInt(i/32)*30,map[i]);
+		obs.push(ob);
+		besideHero.push(ob);
+		besideEnemy.push(ob);
+		all.push(ob);
+	}
+	
+}
+for(var i=0;i<3;i++){
+//����һ��̹��
+
+	var enemyTank=new EnemyTank((i+1)*50,80,2,enemyColor);
+//������̹�˷������飻
+	enemyTanks[i]=enemyTank;
+	besideHero.push(enemyTanks[i]);
+	all.push(enemyTanks[i]);
+	window.setInterval("enemyTanks["+i+"].run()",50);
+	}
+all.push(hero);
+flashTankMap();
+besideEnemy.push(hero);
+//ר��дһ���������ڶ�ʱˢ�����ǵĻ���
+function flashTankMap(){
+	cxt.clearRect(0,0,960,600);
+	if(hero.isLive){
+		drawTank(hero);
+		}
+	drawObs();
+	drawHeroBullet();
+	isHitEnemyTank();
+	drawEnemyBullet();
+	hitHero();
+	drawEnemyBomb();
+	for (var i=0;i<3;i++){
+		drawTank(enemyTanks[i]);
+	}
+	isClick();
+}
+
+//�ѻ���̹�˷�װ��һ������������������Ϊ��Ա����
+//���������������Ի��Լ���̹��Ҳ���Ի����˵�̹�ˣ�����tank���Ƕ���
+//�����Լ���̹�ˣ�ʹ��ǰ���Ļ�ͼ����
+//�õ�����
+
+function getCommand()
+{
+var code=event.keyCode;
+switch(code){
+case 87:
+hero.moveUp();
+break;
+case 68:
+hero.moveRight();
+break;
+case 83:
+hero.moveDown();
+break;
+case 65:
+hero.moveLeft();
+break;
+case 74:
+hero.shotEnemy();
+break; 
+}
+flashTankMap();
+}
+//ÿ��100msȥˢ����ս��
+window.setInterval("flashTankMap()",100);
+
+</script>
+</body>
+</html>
+  

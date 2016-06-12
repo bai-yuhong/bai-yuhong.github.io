@@ -1,0 +1,437 @@
+
+  
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.10.11/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/2.1.19/daterangepicker.min.css" rel="stylesheet">
+    <style type="text/css">
+        *{margin:0;
+        padding:0;}
+        body{
+            background: lightcyan;
+            margin:0;
+            padding:0;
+        }
+        h2{
+            margin:50px;
+        }
+        #header{
+            width:80%;
+            height:100%;
+            margin:0 auto;
+            text-align: center;
+        }
+        #content{
+            background: white;
+            width:80%;
+            height:100%;
+            margin:0 auto;
+        }
+        #mytable tr{
+            cursor: pointer;
+        }
+        #mytable tr td{
+            width:80px;
+        }
+        #mytable tr:nth-child(even){
+            background: lightcyan;
+        }
+        #mytable tr:nth-child(odd){
+            background: cornsilk;
+        }
+        #mytable thead tr:nth-child(1){
+            background: white;
+        }
+        #mytable tr td{
+            text-align: left;
+            padding:0;
+        }
+        #mytable tr:hover{
+            background: cornflowerblue;
+        }
+        .choose{
+            background: red;
+            color:red;
+        }
+        div.btns{
+            padding:10px;
+        }
+        div.btns input{
+            width:55px;
+            margin:10px;
+            border-radius: 5px;
+            background: none;
+        }
+        #mask{
+            background-color: black;
+            opacity:0.7;
+            filter:Alpha(opacity=70);
+            position:fixed;
+            left:0;
+            top:0;
+            width:100%;
+            height:100%;
+            z-index:999;
+            display: none;
+        }
+        #pop1,#pop2{
+            text-align: center;
+            position: fixed;
+            z-index:1000;
+            background: white;
+            border:1px solid gray;
+            border-radius: 5px;
+            left:50%;
+            top:50%;
+            width:400px;
+            height:450px;
+            margin-left:-150px;
+            margin-top:-200px;
+            padding:20px;
+            display:none;
+        }
+        #pop1 input,#pop2 input{
+            border:none;
+            width:100%;
+        }
+        #pop1 input.status,#pop2 input.status{
+            border:1px;
+            width:20%;
+            display:inline;
+        }
+        input.ok1,input.cancel1,input.ok2,input.cancel2{
+            width:50px;
+            margin:5px 20px;
+        }
+    </style>
+</head>
+<body>
+<div id="mask"></div>
+<div id="pop1">
+    <form>
+        <h3>添加新账户</h3>
+        <table class="table table-bordered">
+            <tr><td>编号</td><td><input type="text" class="id" required></td></tr>
+            <tr><td>名称</td><td><input class="name" type="text" required></td></tr>
+            <tr><td>备注</td><td><input class="note" type="text" required></td></tr>
+            <tr><td>状态</td><td><input class="status" type="radio" name="status" value="正常">正常<input class="status" type="radio" name="status" value="停用">停用</td></tr>
+            <tr><td>创建时间</td><td><input class="signTime" type="text" required></td></tr>
+            <tr><td>最后登录时间</td><td><input class="lastTime" type="text" required></td></tr>
+            <tr><td>账号类型</td><td>
+                <select class="type">
+                    <option value="公司">公司</option>
+                    <option value="个人">个人</option>
+                    <option value="学校">学校</option>
+                </select>
+            </td></tr>
+            <tr><td colspan="2"><input type="button" class="ok1" value="提交"><input type="button" class="cancel1" value="取消"></td></tr>
+        </table>
+    </form>
+</div>
+<div id="pop2">
+    <form>
+        <h3>修改账号信息</h3>
+        <table class="table table-bordered">
+            <tr><td>编号</td><td><input type="text" class="id" required></td></tr>
+            <tr><td>名称</td><td><input type="text" class="name" required></td></tr>
+            <tr><td>备注</td><td><input type="text" class="note" required></td></tr>
+            <tr><td>状态</td><td><input class="status" type="radio" name="status" value="正常">正常<input class="status" type="radio" name="status" value="停用">停用</td></tr>
+            <tr><td>创建时间</td><td><input type="text" class="signTime" required></td></tr>
+            <tr><td>最后登录时间</td><td><input type="text" class="lastTime" required></td></tr>
+            <tr><td>账号类型</td><td>
+                <select class="type">
+                    <option value="公司">公司</option>
+                    <option value="个人">个人</option>
+                    <option value="学校">学校</option>
+                </select>
+            </td></tr>
+            <tr><td colspan="2"><input type="button" class="ok2" value="提交"><input type="button" class="cancel2" value="取消"></td></tr>
+        </table>
+    </form>
+</div>
+<div id="header">
+    <h2>账号管理demo</h2>
+</div>
+<div id="content">
+    <div class="btns">
+        <input type="button" class="delete" value="Delete">
+        <input type="button" class="add" value="Add">
+        <input type="button" class="update" value="Update">
+    </div>
+    <div class="container-fluid" id="LG">
+
+                <table class="table table-bordered table-hover" id="mytable">
+                    <thead>
+                    <tr>
+                        <th>
+                            编码
+                        </th>
+                        <th>
+                            名称
+                        </th>
+                        <th>
+                            备注
+                        </th>
+                        <th>
+                            状态
+                        </th>
+                        <th>
+                            创建时间
+                        </th>
+                        <th>
+                            最后登录时间
+                        </th>
+                        <th>
+                            账号类型
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-beta1/jquery.min.js"></script>
+<script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.11/js/dataTables.bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/2.1.19/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/2.1.19/daterangepicker.min.js"></script>
+<script type="text/javascript">
+    //初始化
+    $('input.signTime').daterangepicker();
+    $('input.lastTime').daterangepicker();
+    var data=[
+        {id:10,name:"zhangsan",note:"dgusfgduyfg",status:"正常",signTime:"04/05/2015-04/06/2015",lastTime:"04/05/2015-04/06/2015",type:"学校"},
+        {id:11,name:"zhangsan",note:"dgusfgduyfg",status:"正常",signTime:"04/05/2015-04/06/2015",lastTime:"04/05/2015-04/06/2015",type:"学校"},
+        {id:12,name:"zhangsan",note:"dgusfgduyfg",status:"正常",signTime:"04/05/2015-04/06/2015",lastTime:"04/05/2015-04/06/2015",type:"学校"},
+        {id:13,name:"zhangsan",note:"dgusfgduyfg",status:"正常",signTime:"04/05/2015-04/06/2015",lastTime:"04/05/2015-04/06/2015",type:"学校"},
+        {id:14,name:"zhangsan",note:"dgusfgduyfg",status:"停用",signTime:"04/05/2015-04/06/2015",lastTime:"04/05/2015-04/06/2015",type:"学校"},
+        {id:15,name:"zhangsan",note:"dgusfgduyfg",status:"正常",signTime:"04/05/2015-04/06/2015",lastTime:"04/05/2015-04/06/2015",type:"学校"},
+        {id:16,name:"zhangsan",note:"dgusfgduyfg",status:"正常",signTime:"04/05/2015-04/06/2015",lastTime:"04/05/2015-04/06/2015",type:"学校"},
+        {id:17,name:"zhangsan",note:"dgusfgduyfg",status:"正常",signTime:"04/05/2015-04/06/2015",lastTime:"04/05/2015-04/06/2015",type:"学校"},
+        {id:18,name:"zhangsan",note:"dgusfgduyfg",status:"正常",signTime:"04/05/2015-04/06/2015",lastTime:"04/05/2015-04/06/2015",type:"学校"},
+        {id:19,name:"zhangsan",note:"dgusfgduyfg",status:"正常",signTime:"04/05/2015-04/06/2015",lastTime:"04/05/2015-04/06/2015",type:"学校"},
+        {id:20,name:"zhangsan",note:"dgusfgduyfg",status:"正常",signTime:"04/05/2015-04/06/2015",lastTime:"04/05/2015-04/06/2015",type:"学校"},
+        {id:21,name:"zhangsan",note:"dgusfgduyfg",status:"正常",signTime:"04/05/2015-04/06/2015",lastTime:"04/05/2015-04/06/2015",type:"学校"},
+        {id:22,name:"zhangsan",note:"dgusfgduyfg",status:"正常",signTime:"04/05/2015-04/06/2015",lastTime:"04/05/2015-04/06/2015",type:"学校"},
+        {id:23,name:"zhangsan",note:"dgusfgduyfg",status:"正常",signTime:"04/05/2015-04/06/2015",lastTime:"04/05/2015-04/06/2015",type:"学校"},
+        {id:24,name:"zhangsan",note:"dgusfgduyfg",status:"正常",signTime:"04/05/2015-04/06/2015",lastTime:"04/05/2015-04/06/2015",type:"学校"},
+        {id:25,name:"zhangsan",note:"dgusfgduyfg",status:"正常",signTime:"04/05/2015-04/06/2015",lastTime:"04/05/2015-04/06/2015",type:"学校"},
+        {id:26,name:"zhangsan",note:"dgusfgduyfg",status:"正常",signTime:"04/05/2015-04/06/2015",lastTime:"04/05/2015-04/06/2015",type:"学校"},
+        {id:27,name:"zhangsan",note:"dgusfgduyfg",status:"正常",signTime:"04/05/2015-04/06/2015",lastTime:"04/05/2015-04/06/2015",type:"学校"}
+
+    ];
+    var index;//全局的一个值用来标记当前操作的是哪一行
+    var table=$("#mytable").DataTable({
+        data:data,
+        columns:[
+            {data:'id'},
+            {data:'name'},
+            {data:'note'},
+            {data:'status'},
+            {data:'signTime'},
+            {data:'lastTime'},
+            {data:'type'}
+        ]
+    });
+    //给tr绑定事件
+    $("#mytable tbody").on("click","tr",function(){
+        index=$(this).find('td').first().text();
+        $(this).siblings().removeClass("choose");
+        $(this).addClass("choose");
+    });
+    //添加新数据
+    $("input.add").click(function(){
+        $("#mask").show();
+        $("#pop1").show();
+    });
+    $("#pop1 input.ok1").click(function(){
+        //验证输入的值是否是数字并且是唯一的。
+        if(check($("#pop1 form")))
+        {
+            data.push({
+                id:$("#pop1 table").find("input.id").val(),
+                name:$("#pop1 table").find("input.name").val(),
+                note:$("#pop1 table").find("input.note").val(),
+                status:$("#pop1 table").find("input:radio[name='status']:checked").val(),
+                signTime:$("#pop1 table").find("input.signTime").val(),
+                lastTime:$("#pop1 table").find("input.lastTime").val(),
+                type:$("#pop1 table").find("select.type").val()
+            });
+            $("#pop1 table").find("input.id").val("");
+            $("#pop1 table").find("input.name").val("");
+            $("#pop1 input.note").val("");
+            $("#pop1 table").find("input.note").val("");
+            $("#pop1 table").find("input.signTime").val("");
+            $("#pop2 table").find("input.lastTime").val("");
+            $("#pop2 table").find("select.type").val("");
+            table.clear();
+            $("#mask").hide();
+            $("#pop1").hide();
+            table.rows.add(data);
+            table.draw();
+            alert("添加新用户成功");
+        }
+    });
+    $("#pop1 input.cancel1").click(function(){
+			$("#pop1 table").find("input.id").val("");
+            $("#pop1 table").find("input.name").val("");
+            $("#pop1 input.note").val("");
+            $("#pop1 table").find("input.note").val("");
+            $("#pop1 table").find("input.signTime").val("");
+            $("#pop2 table").find("input.lastTime").val("");
+            $("#pop2 table").find("select.type").val("");
+        $("#mask").hide();
+        $("#pop1").hide();
+        return false;
+    });
+    //更新数据
+    $("input.update").click(function(){
+        if(checkChoose($("#mytable tbody"))){
+            $("#mask").show();
+            $("#pop2").show();
+            var s=getIndex(index);
+            $("#pop2 input.id").val(data[s].id);
+            $("#pop2 input.name").val(data[s].name);
+            $("#pop2 input.note").val(data[s].note);
+            $("#pop2 input.status").val(data[s].status);
+            $("#pop2 input.signTime").val(data[s].signTime);
+            $("#pop2 input.lastTime").val(data[s].lastTime);
+            $("#pop2 select.type").val(data[s].type);
+        }
+    });
+    $("#pop2 input.ok2").click(function(){
+        if(check2($("#pop2 form")))
+        {
+            var s=getIndex(index);
+            data[s].id=$("#pop2 table").find("input.id").val();
+            data[s].name=$("#pop2 table").find("input.name").val();
+            data[s].note=$("#pop2 table").find("input.note").val();
+            data[s].status=$("#pop2 table").find("input.status").val();
+            data[s].signTime=$("#pop2 table").find("input.signTime").val();
+            data[s].lastTime=$("#pop2 table").find("input.lastTime").val();
+            data[s].type=$("#pop2 table").find("select.type").val();
+            table.clear();
+            $("#mask").hide();
+            $("#pop2").hide();
+            table.rows.add(data);
+            table.draw();
+            alert("信息更新成功");
+        }
+    });
+    $("#pop2 input.cancel2").click(function(){
+        $("#mask").hide();
+        $("#pop2").hide();
+        return false;
+    });
+    //删除数据
+    $("input.delete").click(function(){
+        if(checkChoose($("#mytable tbody")))
+        {
+            var r=confirm("你确定要删除吗?");
+            if(r==true)
+            {
+                var s=getIndex(index);
+                data.splice(s,1);
+                table.clear();
+                table.rows.add(data);
+                table.draw();
+            }
+            alert("删除成功");
+        }
+    });
+    //这是一些公有函数
+    //根据id获取data中的元素
+    function getIndex(num)
+    {
+        var len=data.length;
+        for(var i=0;i<len;i++)
+        {
+            if(data[i].id==num)
+            {
+                return i;
+            }
+        }
+    }
+    //验证输入的值是否是数字并且是唯一的。
+    function check(forms)
+    {
+        if(forms.find("input.id").val()==""||forms.find("input.name").val()==""||forms.find("input.note").val()==""||forms.find("input.status").val()==""||forms.find("input.signTime").val()==""||forms.find("input.lastTime").val()==""||forms.find("select.type").val()=="")
+        {
+            alert("必须填写全部内容");
+            return false
+        }
+        else
+        {
+            var par=forms.find("input.id").val();
+            if(parseInt(par)==par)
+            {
+                    for(var i=0;i<data.length;i++)
+                    {
+                        if(data[i].id==par)
+                        {
+                            alert("该编号已经存在");
+                            return false;
+                        }
+                    }
+
+                return true;
+            }
+            else{
+                alert("编码必须为数字");
+                return false;
+            }
+        }
+    }
+    function check2(forms)
+    {
+        if(forms.find("input.id").val()==""||forms.find("input.name").val()==""||forms.find("input.note").val()==""||forms.find("input.status").val()==""||forms.find("input.signTime").val()==""||forms.find("input.lastTime").val()==""||forms.find("select.type").val()=="")
+        {
+            alert("必须填写全部内容");
+            return false
+        }
+        else
+        {
+            var par=forms.find("input.id").val();
+            var s=getIndex(par);
+            if(parseInt(par)==par)
+            {
+                for(var i=0;i<data.length;i++)
+                {
+                    if(data[i].id==par&&i!=s)
+                    {
+                        alert("该编号已经存在");
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+            else{
+                alert("编码必须为数字");
+                return false;
+            }
+        }
+    }
+    //检测现在是否有行选定
+    function checkChoose(trs)
+    {
+        if(trs.find("tr").hasClass("choose"))
+        {
+            return true;
+        }
+        else{
+            alert("必须选中某一行来进行操作");
+            return false;
+        }
+    }
+</script>
+</body>
+</html>
+  
