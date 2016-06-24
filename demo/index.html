@@ -38,12 +38,56 @@
     
     <link rel="stylesheet" href="/css/style.css">
 	<style type="text/css">
-		#div1,#div2,#div3,#div4{
-			width:500px;
-			height:500px;
-			margin:50px;
-			float:left;
+	body{
+	background:white;
+	}
+	#my_contain{
+	width:1129px;
+	height:1200px;
+	background:white;
+	padding:20px;
+	margin:0 auto;
+	box-shadow:0 0 3px 2px lightgrey;
+	border-radius:3px;
+	display:flex;
+	flex-wrap:wrap;
+	flex-direction:column;
+	}
+	#my_contain .my_item{
+		box-shadow:0 0 2px 2px #888888;
+		margin:20px 15px;
+		position:relative;
+		width:300px;
+		border-radius:2px;
+		transition:1s;
+		-webkit-transform-origin:center center;
+	}
+	.my_item a img{
+		width:300px;
+	}
+	
+	div.my_item:hover{
+		color:red;
+		-webkit-transform:scale(1.05);
+		cursor:pointer;
 		}
+		.my_item div{
+		color:white;}
+	.my_item:nth-of-type(5n) div{
+	background:#00EE00;
+	}
+	.my_item:nth-of-type(5n+1) div{
+	background:#BF3EFF;
+	}
+	.my_item:nth-of-type(5n+2) div{
+	background:#4876FF;
+	}
+	.my_item:nth-of-type(5n+3) div{
+	background:	#FF00FF;
+	}
+	.my_item:nth-of-type(5n+4) div{
+	background:red;
+	}
 	</style>
 </head>
 
@@ -87,22 +131,94 @@
 			</ul></nav>			
 </div>
         </header>
-		<div id="div1">
-			<a href="demo/a/index.html"><img src="1.png" style="width:500px;height:400px"></a><br>
+		<div id="my_contain">
+	<div class="my_item">
+		<a href="demo/a/index.html"><img src="1.png"></a>
+		<div>
+			<h3>表格操作</h3>
 			<span>这是一个表格的操作</span>
 		</div>
-		<div id="div2">
-			<a href="demo/tanke/tanke10.html"><img src="2.png" style="width:500px;height:400px"></a><br>
+	</div>
+	<div class="my_item">
+		<a href="demo/tanke/tanke10.html"><img src="2.png"></a>
+		<div>
+			<h3>坦克大战</h3>
 			<span>这是一个坦克大战游戏</span>
 		</div>
-		<div id="div3">
-			<a href="demo/slider/Image_fadeout.html"><img src="3.png" style="width:500px;height:400px"></a><br>
+	</div>
+	<div class="my_item">
+		<a href="demo/slider/Image_fadeout.html"><img src="3.png"></a>
+		<div>
+			<h3>图片轮播</h3>
 			<span>这是图片淡入淡出的轮播</span>
 		</div>
-		<div id="div4">
-			<a href="demo/slider/Image_slide.html"><img src="4.png" style="width:500px;height:400px"></a><br>
-			<span>这是图片划入划出的轮播</span>
+		
+	</div>
+	<div class="my_item">
+		<a href="demo/slider/Image_slide.html"><img src="4.png"></a>
+		<div>
+			<h3>图片轮播</h3>
+			<span>这是图片淡入淡出的轮播</span>
 		</div>
+	</div>
+	<div class="my_item">
+		<img src="lord.jpg" />
+		<div>
+			<h3></h3>
+			<span></span>
+		</div>
+	</div>
+	<div class="my_item">
+		<img src="feast.jpg" />
+		<div>
+			<h3></h3>
+			<span></span>
+		</div>
+	</div>
+	<div class="my_item">
+		<img src="lord.jpg" />
+		<div>
+			<h3></h3>
+			<span></span>
+		</div>
+	</div>
+	<div class="my_item">
+		<img src="lord.jpg" />
+		<div>
+			<h3></h3>
+			<span></span>
+		</div>
+	</div>
+	<div class="my_item">
+		<img src="lord.jpg" />
+		<div>
+			<h3></h3>
+			<span></span>
+		</div>
+	</div>
+	<div class="my_item">
+		<img src="lord.jpg" />
+		<div>
+			<h3></h3>
+			<span></span>
+		</div>
+	</div>
+	<div class="my_item">
+		<img src="lord.jpg" />
+		<div>
+			<h3></h3>
+			<span></span>
+		</div>
+	</div>
+	<div class="my_item">
+		<img src="lord.jpg" />
+		<div>
+			<h3></h3>
+			<span></span>
+		</div>
+	</div>
+	
+</div>
 		
         <footer><div id="footer">
 	
