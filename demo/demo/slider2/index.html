@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        body{
+            background: url(bg.jpg) repeat;
+        }
+        header{
+            text-align: center;
+        }
+        header ul{
+            list-style: none;
+            width:210px;
+            margin:0 auto;
+        }
+        header ul li{
+            display: inline-block;
+            width:60px;
+            height:60px;
+            border-radius:50px;
+            font-style: italic;
+            font-size:15px;
+            line-height: 60px;
+            color: #fff;;
+            background: rgba(104,171,194,0.5);
+            margin:0 20px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        section{
+            width:600px;height:400px;
+            border:20px solid #fff;
+            margin:40px auto;
+            position: relative;
+            box-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        #container1,#container2{
+            display: none;
+            position:absolute;
+            top:0;
+            left:0;
+        }
+        /*第一个containter1*/
+        #container1{
+            width:600px;height:400px;
+            overflow: hidden;
+        }
+        ul.img{
+            list-style: none;
+            font-size: 0;
+            width:2400px;height: 400px;
+            margin:0;
+            padding: 0;
+            position: absolute;
+            top:0;
+            left:0;
+            transition: 1s;
+        }
+        ul.img li{
+            display: inline-block;
+            width:600px;height:400px;
+        }
+        ul.index{
+            position: absolute;
+            margin:0;
+            padding:0;
+            bottom:20px;
+            width:600px;height:34px;
+            display: flex;
+            justify-content: space-around;
+            list-style: none;
+
+        }
+        ul.index li{
+            display:inline-block;
+            width:34px;height:34px;
+            border-radius: 50%;
+            box-shadow: 0px 0px 0px 4px rgba(255,255,255,0.3);
+            color: #fff;;
+            background: rgba(104,171,194,0.5);
+            text-align: center;
+            z-index:1000;
+            font-size:20px;
+            line-height: 34px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        /*第二个containter2*/
+        #container2{
+            width:600px;height:400px;
+            overflow: hidden;
+        }
+        #container2 ul.img{
+            width:600px;
+        }
+        #container2 ul.img li{
+            position: absolute;
+            top:0;
+            left:0;
+            transition: 1s;
+        }
+        img{
+            width:600px;height:400px;
+        }
+        .active{
+            background:rgba(255,255,255,1) !important ;
+            color: rgba(104,171,194,1) !important;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>图片幻灯片效果展示</h1>
+        <ul>
+            <li  id="bt1">Demo1</li>
+            <li  id="bt2">Demo2</li>
+        </ul>
+    </header>
+    <section>
+        <div id="container1">
+            <ul class="img">
+                <li><img src="image/1.jpg" /></li>
+                <li><img src="image/2.jpg" /></li>
+                <li><img src="image/3.jpg" /></li>
+                <li><img src="image/4.jpg" /></li>
+            </ul>
+
+                <ul class="index">
+                    <li class="active">1</li>
+                    <li>2</li>
+                    <li>3</li>
+                    <li>4</li>
+                </ul>
+        </div>
+        <div id="container2">
+            <ul class="img">
+                <li><img src="image/3.jpg" /></li>
+                <li><img src="image/4.jpg" /></li>
+                <li><img src="image/5.jpg" /></li>
+                <li><img src="image/6.jpg" /></li>
+            </ul>
+                <ul class="index">
+                    <li class="active">1</li>
+                    <li>2</li>
+                    <li>3</li>
+                    <li>4</li>
+                </ul>
+        </div>
+    </section>
+    <script>
+        window.onload=function(){
+            var bt1=document.getElementById("bt1");
+            var bt2=document.getElementById("bt2");
+            var container1=document.getElementById("container1");
+            var container2=document.getElementById("container2");
+            var timer1=null;
+            var timer2=null;
+            demo1();
+            bt1.onclick=function(){
+                if(timer1)
+                {
+                    clearInterval(timer1);
+                }
+                demo1();
+            };
+            bt2.onclick=function(){
+                if(timer2)
+                {
+                    clearInterval(timer2);
+                }
+                demo2();
+            };
+            function demo1()
+            {
+                bt2.className="";
+                bt1.className="active";
+                container2.style.display="none";
+                container1.style.display="block";
+                var uls=container1.getElementsByTagName("ul");
+                var lis=uls[1].getElementsByTagName("li");
+                //初始化自动播放
+                var index=0;
+                for(var j=0;j<lis.length;j++)
+                {
+                    lis[j].className="";
+                }
+                lis[0].className="active";
+                uls[0].style.left=0+"px";
+                init();
+                for(var i=0;i<lis.length;i++)
+                {
+                    (function(i){
+                        lis[i].onclick=function()
+                        {
+                            clearInterval(timer1);
+                            for(var j=0;j<lis.length;j++)
+                            {
+                                lis[j].className="";
+                            }
+                            lis[i].className="active";
+                            uls[0].style.left=-i*600+"px";
+                            index=i;
+                            init();
+                        }
+                    })(i);
+                };
+                function init()
+                {
+                    timer1=setInterval(function() {
+                        index++;
+                        if (index>3){
+                            index=0;
+                        }
+                        for(var j=0;j<lis.length;j++)
+                        {
+                            lis[j].className="";
+                        }
+                        lis[index].className="active";
+                        uls[0].style.left=-index*600+"px";
+                    },3000);
+                };
+            }
+            function demo2()
+            {
+                bt1.className="";
+                bt2.className="active";
+                container1.style.display="none";
+                container2.style.display="block";
+
+                var uls=container2.getElementsByTagName("ul");
+                var imgs=uls[0].getElementsByTagName("li");
+                var lis=uls[1].getElementsByTagName("li");
+                var index=0;
+                for(var j=0;j<lis.length;j++)
+                {
+                    lis[j].className="";
+                    imgs[j].style.opacity=0;
+                }
+                lis[0].className="active";
+                imgs[0].style.opacity=1;
+                init();
+                for(var i=0;i<lis.length;i++)
+                {
+                    (function(i){
+                        lis[i].onclick=function()
+                        {
+                            clearTimeout(timer2);
+                            for(var j=0;j<lis.length;j++)
+                            {
+                                lis[j].className="";
+                                imgs[j].style.opacity=0;
+                            }
+                            lis[i].className="active";
+                            imgs[i].style.opacity=1;
+                            index=i;
+                            init();
+                        }
+                    })(i)
+                }
+
+                function init()
+                {
+                    timer2=setInterval(function(){
+                        index++;
+                        if(index>3)
+                        {
+                            index=0;
+                        }
+                        for(var j=0;j<lis.length;j++)
+                        {
+                            lis[j].className="";
+                            imgs[j].style.opacity=0;
+                        }
+                        lis[index].className="active";
+                        imgs[index].style.opacity=1;
+                    },3000);
+                }
+            }
+        }
+    </script>
+</body>
+</html>
