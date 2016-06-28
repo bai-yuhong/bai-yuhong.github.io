@@ -61,21 +61,6 @@
 			color:white;
 			font-family: Helvetica, 'Hiragino Sans GB', 'Microsoft Yahei', '微软雅黑', Arial, sans-serif;
 		}
-		ul div:nth-of-type(5n){
-			background:#00EE00;;
-		}
-		ul div:nth-of-type(5n+1){
-			background:#BF3EFF;;
-		}
-		ul div:nth-of-type(5n+2){
-			background:#4876FF;;
-		}
-		ul div:nth-of-type(5n+3){
-			background:#FF00FF;;
-		}
-		ul div:nth-of-type(5n+4){
-			background:red;
-		}
 		a.my_item div h3{
 			font-size: 20px;
 			font-weight: normal;
@@ -323,7 +308,13 @@ var _hmt = _hmt || [];
 </script>
 <script>
 	$(function(){
-		alert("gds");
+		$divs=$("#my_contain ul").find("div");
+		var color=[#00EE00,#BF3EFF,#4876FF,#FF00FF,#FFA07A,#32CD32,#CD00CD,#1E90FF,#CD2626,#FF00FF]
+		var len=$divs.length;
+		for(var i=0;i<len;i++)
+		{
+			$divs.css("background",color[Math.Math.floor(random()*10)]);
+		}
 	})
 </script>
 
