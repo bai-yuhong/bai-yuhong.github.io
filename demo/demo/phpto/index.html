@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        body{
+            height:100%;
+            padding:0;
+            margin:0;
+        }
+        #container{
+            width:1060px;
+            height:450px;
+            margin:60px auto;
+            position: relative;
+        }
+        #container img{
+            padding:10px 10px 15px;
+            width:215px;
+            height:185px;
+            background: #fff;
+            border:1px solid #DDD;
+            position: absolute;
+            z-index: 1;
+            transition:1s;
+            -webkit-transition:1s ;
+            -moz-transition:1s;
+
+        }
+        #container img:hover {
+            transform: rotate(0deg)  scale(1.2);
+            -webkit-transform:rotate(0deg)  scale(1.2);
+            -moz-transform:rotate(0deg)  scale(1.2);
+            box-shadow: 0 0 10px #ccc;
+            cursor: pointer;
+            z-index:99 !important;
+        }
+        .img1 {
+            top:50px; left:30px;
+            -webkit-transform:rotate(20deg);
+            -moz-transform:rotate(20deg);
+            transform: rotate(20deg);
+        }
+        .img2 {
+            top:30px; left:130px;
+            -webkit-transform:rotate(-15deg);
+            -moz-transform:rotate(-15deg);
+            transform: rotate(-15deg);
+        }
+        .img3 {
+            top:60px; left:320px;
+            -webkit-transform:rotate(25deg);
+            -moz-transform:rotate(25deg);
+            transform: rotate(25deg);
+        }
+        .img4{
+            top:20px; right:250px;
+            -webkit-transform:rotate(10deg);
+            -moz-transform:rotate(10deg);
+            transform: rotate(10deg);
+        }
+        .img5 {
+            top:50px; right:30px;
+            -webkit-transform:rotate(-15deg);
+            -moz-transform:rotate(-15deg);
+            transform: rotate(-15deg);
+        }
+        .img6 {
+            bottom:30px; left:70px;
+            -webkit-transform:rotate(-20deg);
+            -moz-transform:rotate(-20deg);
+            transform: rotate(-20deg);
+        }
+        .img7{
+            bottom:10px; left:280px;
+            -webkit-transform:rotate(30deg);
+            -moz-transform:rotate(30deg);
+            transform: rotate(30deg);
+        }
+        .img8 {
+            bottom:50px; left:450px;
+            -webkit-transform:rotate(20deg);
+            -moz-transform:rotate(20deg);
+            transform: rotate(20deg);
+        }
+        .img9{
+            bottom:10px; right:150px;
+            -webkit-transform:rotate(-15deg);
+            -moz-transform:rotate(-15deg);
+            transform: rotate(-15deg);
+        }
+        .img10 {
+            bottom:-20px; right:-10px;
+            -webkit-transform:rotate(20deg);
+            -moz-transform:rotate(20deg);
+            transform: rotate(20deg);
+        }
+        #mask{
+            background: rgba(0,0,0,0.5);
+            z-index:100;
+            width:100%;
+            height:100%;
+            position: fixed;
+            margin:0;
+            top:0;
+            display: none;
+        }
+        #mask #img{
+            width:600px;
+            height:400px;
+            padding:20px;
+            position: absolute;
+            top:50%;
+            left:50%;
+            margin-top:-200px;
+            margin-left:-300px;
+            z-index:101;
+            background: white;
+            border:1px solid black;
+        }
+        #mask #img img{
+            width:600px;
+            height:400px;
+            display: block;
+            z-index:102;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+<div id="container">
+    <img class="img1" src="img/season6.jpg">
+    <img class="img2" src="img/1.jpg">
+    <img class="img3" src="img/2.jpg">
+    <img class="img4" src="img/3.jpg">
+    <img class="img5" src="img/4.jpg">
+    <img class="img6" src="img/downstairs.jpg">
+    <img class="img7" src="img/season6.jpg">
+    <img class="img8" src="img/1.jpg">
+    <img class="img9" src="img/season6.jpg">
+    <img class="img10"src="img/2.jpg">
+</div>
+<div id="mask">
+    <div id="img">
+        <img src="img/2.jpg">
+    </div>
+</div>
+<h3>需要注意的几点小问题</h3>
+<p>1.css的伪类:n-th-type会影响：hover中的属性，两个会有冲突</p>
+<p>2.!important的使用，有时候定义的一个属性z-index会被前面的所覆盖</p>
+<p>3.opacity会影响他的子元素，而rgba不会影响</p>
+<p>4.在设计弹出窗的时候一定要阻止事件冒泡</p>
+<script>
+    var container=document.getElementById("container");
+    var oImg=container.getElementsByTagName("img");
+    var img=document.getElementById("img").getElementsByTagName("img")[0];
+    var mask=document.getElementById("mask");
+    for(var i=0;i<oImg.length;i++)
+    {
+        (function(){
+            oImg[i].onclick=function(event){
+                var event=event||window.event;
+                mask.style.display="block";
+                img.src=this.src;
+                event.stopPropagation();
+            }
+        })(i)
+    }
+    document.onclick=function(){
+        mask.style.display="none";
+    }
+</script>
+</body>
+</html>
