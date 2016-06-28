@@ -1,96 +1,91 @@
-
-  
-    
-
-  
-    <!DOCTYPE HTML>
+<!DOCTYPE HTML>
 <html>
-<head>
-  <meta charset="UTF-8">
-  
-    <title>about | baiyuhong</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
-    
+<head><meta charset="UTF-8">
+	<title>about | baiyuhong</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     <meta name="author" content="baiyuhong">
-    
-
-    
     <meta name="description">
-<meta property="og:type" content="website">
-<meta property="og:title" content="about">
-<meta property="og:url" content="http://yoursite.com/about/index.html">
-<meta property="og:site_name" content="baiyuhong">
-<meta property="og:description">
-<meta property="og:updated_time" content="2016-06-12T08:22:59.244Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="about">
-<meta name="twitter:description">
-
-    
+	<meta property="og:type" content="website">
+	<meta property="og:title" content="about">
+	<meta property="og:url" content="http://yoursite.com/about/index.html">
+	<meta property="og:site_name" content="baiyuhong">
+	<meta property="og:description">
+	<meta property="og:updated_time" content="2016-06-12T08:22:59.244Z">
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:title" content="about">
+	<meta name="twitter:description">
     <link rel="alternative" href="/atom.xml" title="baiyuhong" type="application/atom+xml">
-    
-    
     <link rel="icon" href="/img/favicon.ico">
-    
-    
     <link rel="apple-touch-icon" href="/img/jacman.jpg">
     <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
-    
     <link rel="stylesheet" href="/css/style.css">
 	<style type="text/css">
 	body{
 	background:#ddd;
 	}
 	#my_contain{
-	width:1000px;
-	height:700px;
-	background:white;
-	padding:10px;
-	margin:20px auto;
-	box-shadow:0 0 3px 2px lightgrey;
-	border-radius:3px;
-	display:flex;
-	flex-wrap:wrap;
-	flex-direction:column;
+		width: 1140px;
+		margin:60px auto;
+		padding:15px;
+		box-shadow: rgb(170, 170, 170) 0px 0px 10px 0px;
+		background: white;
 	}
-	#my_contain .my_item{
-		box-shadow:0 0 2px 2px #888888;
-		margin:20px 15px;
-		position:relative;
-		width:280px;
-		border-radius:2px;
-		-webkit-transform-origin:center center;
-	}
-	.my_item a img{
-		display:block;
-		width:250px;
-		margin:10px auto;
-		border:5px solid white;
-	}
-	
-	div.my_item:hover{
-		color:red;
-		-webkit-transform:scale(1.05);
-		box-shadow:0 0 5px 5px grey;
-		cursor:pointer;
+		#my_contain ul{
+			padding:20px;
+			width:1100px;
+			list-style: none;
+			margin:0 auto;
+			display: flex;
+			justify-content: space-around;
 		}
-		.my_item div{
-		color:white;}
-	.my_item:nth-of-type(5n) div{
-	background:#00EE00;
-	}
-	.my_item:nth-of-type(5n+1) div{
-	background:#BF3EFF;
-	}
-	.my_item:nth-of-type(5n+2) div{
-	background:#4876FF;
-	}
-	.my_item:nth-of-type(5n+3) div{
-	background:	#FF00FF;
-	}
-	.my_item:nth-of-type(5n+4) div{
-	background:red;
-	}
+		#my_contain ul li{
+			float:left;
+			display: inline-block;
+			width:260px;
+		}
+		#my_contain ul li a.my_item{
+			text-decoration: none;
+			display: block;
+			margin-bottom: 20px;
+			box-shadow: 0 0 6px #000;
+		}
+		#my_contain ul li a.my_item:hover{
+			box-shadow: 5px 5px 5px grey;
+			transform: scale(1.05);
+		}
+		a.my_item img{
+			width:260px;
+		}
+		a.my_item div{
+			padding:10px 10px 10px 50px;
+			color:white;
+			font-family: Helvetica, 'Hiragino Sans GB', 'Microsoft Yahei', '微软雅黑', Arial, sans-serif;
+		}
+		ul div:nth-of-type(5n){
+			background:#00EE00;;
+		}
+		ul div:nth-of-type(5n+1){
+			background:#BF3EFF;;
+		}
+		ul div:nth-of-type(5n+2){
+			background:#4876FF;;
+		}
+		ul div:nth-of-type(5n+3){
+			background:#FF00FF;;
+		}
+		ul div:nth-of-type(5n+4){
+			background:red;
+		}
+		a.my_item div h3{
+			font-size: 20px;
+			font-weight: normal;
+			margin:20px 0 10px 0;
+		}
+		a.my_item div p{
+			font-size: 12px;
+			line-height: 170%;
+			margin: 0 0 10px;
+		}
 	</style>
 </head>
 
@@ -135,45 +130,45 @@
 </div>
         </header>
 		<div id="my_contain">
-	<div class="my_item">
-		<a href="demo/a/index.html"><img src="1.png"></a>
-		<div>
-			<h3>表格操作</h3>
-			<span>这是一个表格的操作，实现了表格的增删查改，有利用到bootstrap和dateRangePicker</span>
+			<ul>
+				<li>
+					<a class="my_item" href="demo/a/index.html">
+						<img src="1.png">
+						<div>
+							<h3>表格操作</h3>
+							<p>这是一个表格的操作，实现了表格的增删查改，有利用到bootstrap和dateRangePicker</p>
+						</div>
+					</a>
+				</li>
+				<li>
+					<a class="my_item" href="demo/tanke/tanke10.html">
+						<img src="2.png">
+						<div>
+							<h3>坦克大战</h3>
+							<p>这是一个坦克大战游戏，主要是通过html5的canvas和js来实现的。</p>
+						</div>
+					</a>
+				</li>
+				<li>
+					<a class="my_item" href="demo/slider2/index.html">
+						<img src="slider2.png">
+						<div>
+							<h3>图片幻灯片</h3>
+							<p>实现了图片幻灯片的放映，可以分别切换淡入淡出和划入划出两种效果</p>
+						</div>
+					</a>
+				</li>
+				<li>
+					<a class="my_item" href="demo/slider/Image_fadeout.html">
+						<img src="3.png">
+						<div>
+							<h3>图片轮播</h3>
+							<p>这是图片淡入淡出的轮播</p>
+						</div>
+					</a>
+				</li>
+			</ul>
 		</div>
-	</div>
-	<div class="my_item">
-		<a href="demo/tanke/tanke10.html"><img src="2.png"></a>
-		<div>
-			<h3>坦克大战</h3>
-			<span>这是一个坦克大战游戏，主要是通过html5的canvas和js来实现的。</span>
-		</div>
-	</div>
-	<div class="my_item">
-		<a href="demo/slider2/index.html"><img src="slider2.png"></a>
-		<div>
-			<h3>图片幻灯片</h3>
-			<span>实现了图片幻灯片的放映，可以分别切换淡入淡出和划入划出两种效果</span>
-		</div>
-		
-	</div>
-	<div class="my_item">
-		<a href="demo/slider/Image_fadeout.html"><img src="3.png"></a>
-		<div>
-			<h3>图片轮播</h3>
-			<span>这是图片淡入淡出的轮播</span>
-		</div>
-		
-	</div>
-	<div class="my_item">
-		<a href="demo/slider/Image_slide.html"><img src="4.png"></a>
-		<div>
-			<h3>图片轮播</h3>
-			<span>这是图片淡入淡出的轮播</span>
-		</div>
-	</div>
-	
-</div>
 		
         <footer><div id="footer">
 	
@@ -187,25 +182,11 @@
 		<p> Hello ,I&#39;m Larry Page in Google. <br>
 			This is my blog,believe it or not.</p>
 	</section>
-	 
 	<div class="social-font">
 		
 		<a href="http://weibo.com/2176287895" target="_blank" class="icon-weibo" title="微博"></a>
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 	</div>
-			
-		
-
-		<p class="copyright">
+			<p class="copyright">
 		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2016 
 		
 		<a href="/about" target="_blank" title="baiyuhong">baiyuhong</a>
@@ -218,7 +199,6 @@
 <script src="/js/jquery.imagesloaded.min.js"></script>
 <script src="/js/gallery.js"></script>
 <script src="/js/jquery.qrcode-0.12.0.min.js"></script>
-
 <script type="text/javascript">
 $(document).ready(function(){ 
   $('.navbar').click(function(){
@@ -263,8 +243,6 @@ $(document).ready(function(){
   });
 });
 </script>
-
-
 <script type="text/javascript">
 $(document).ready(function(){ 
   var $this = $('.share'),
@@ -313,15 +291,6 @@ $(document).ready(function(){
   });
 });   
 </script>
-
-
-
-
-
-
-
-
-
 <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
 <script src="/fancybox/jquery.fancybox.pack.js"></script>
 <script type="text/javascript">
@@ -342,13 +311,7 @@ $(document).ready(function(){
   }
 }); 
 </script>
-
-
-
 <!-- Analytics Begin -->
-
-
-
 <script>
 var _hmt = _hmt || [];
 (function() {
@@ -358,7 +321,11 @@ var _hmt = _hmt || [];
   s.parentNode.insertBefore(hm, s);
 })();
 </script>
-
+<script>
+	$(function(){
+		alert("gds");
+	})
+</script>
 
 
 <!-- Analytics End -->
