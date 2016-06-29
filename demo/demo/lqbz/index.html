@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="css.css">
+    <style id="cdd">
+
+    </style>
+</head>
+<body>
+<!--钟表效果-->
+<div id="container_1">
+    <ul></ul>
+    <div id="hour"></div>
+    <div id="minu"></div>
+    <div id="sec"></div>
+    <div id="icon"></div>
+</div>
+<!--苹果菜单-->
+<div id="container_2">
+    <img src="images/1.png">
+    <img src="images/2.png">
+    <img src="images/3.png">
+    <img src="images/4.png">
+    <img src="images/5.png">
+</div>
+<div id="container_3">
+    <div id="menu_list">
+        <img src="images/open.png">
+        <img src="images/full.png">
+        <img src="images/clos.png">
+        <img src="images/prev.png">
+        <img src="images/refresh.png">
+    </div>
+    <div id="home"></div>
+</div>
+<div id="container_4">
+    <div id="div1">
+        <img src="images/b2.jpg" style="width:180px;height:180px;">
+        <span></span>
+    </div>
+    <div id="div2">
+        <img src="images/b1.jpg">
+    </div>
+</div>
+<script>
+    fn1();//钟表效果
+    fn2();//苹果菜单
+    fn3();//扇形导航
+    fn4();
+    function fn1(){
+        var oUl=document.getElementById("container_1").getElementsByTagName("ul")[0];
+        var css=document.getElementById("cdd");
+        var oHour=document.getElementById("hour");
+        var oMinu=document.getElementById("minu");
+        var oSec=document.getElementById("sec");
+        var oLi="";
+        var oCss="";
+        for(var i=0;i<60;i++)
+        {
+            oLi+="<li></li>";
+            oCss+="#container_1 ul li:nth-of-type("+(i+1)+"){transform: rotate("+(i*6)+"deg); -webkit-transform:rotate("+(i*6)+"deg) ; -moz-transform: rotate("+(i*6)+"deg); -ms-transform: rotate("+(i*6)+"deg); -o-transform: rotate("+(i*6)+"deg);}"
+        }
+        oUl.innerHTML=oLi;
+        css.innerHTML=oCss;
+        toTime();
+        setInterval(toTime,1000);
+        function toTime(){
+            var oDate=new Date();
+            var s=oDate.getSeconds();
+            var m=oDate.getMinutes()+s/60;
+            var h=oDate.getHours()+m/60;
+            oHour.style.transform="rotate("+30*h+"deg)";
+            oMinu.style.transform="rotate("+6*m+"deg)";
+            oSec.style.transform="rotate("+6*s+"deg)";
+        }
+    }
+    function fn2(){
+        var oDiv=document.getElementById("container_2");
+        var oImg=oDiv.getElementsByTagName("img");
+        document.onmousemove=function(event){
+            var event=event||window.event;
+            for(var i=0;i<oImg.length;i++){
+                var x=oImg[i].offsetLeft+oImg[i].offsetWidth/2-event.clientX;
+                var y=oImg[i].offsetTop+oImg[i].offsetHeight/2+oDiv.offsetTop-event.clientY;
+                var dis=Math.sqrt(x*x+y*y);
+                var scale=(1-dis/300);
+                if(scale<0.5)
+                {
+                    scale=0.5
+                }
+                oImg[i].style.width=scale*128+"px";
+                oImg[i].style.height=scale*128+"px";
+            }
+        }
+    }
+    function fn3(){
+        var btns=true;
+        var R=-150;
+        var oImg=document.getElementById("menu_list").getElementsByTagName("img");
+        for(var i=0;i<oImg.length;i++){
+            oImg[i].onclick=function(){
+                this.style.transition="0.5s";
+                this.style.WebkitTransform="scale(2) rotate(-720px)";
+                this.style.opacity=0.5;
+                alert(this.style.WebkitTransform)
+                addEnd(this,end);
+
+            }
+        }
+        var oHome=document.getElementById("home");
+        oHome.onclick=function(){
+            if(btns){
+                this.style.WebkitTransform="rotate(-360deg)";
+                for(var i=0;i<oImg.length;i++)
+                {
+                    var dis=toLine(R,90/4*i);
+                    oImg[i].style.left=dis[1]+"px";
+                    oImg[i].style.top=dis[2]+"px";
+                    oImg[i].style.transition="0.5s "+i*100+"ms";
+                    oImg[i].style.WebkitTransform="scale(1) rotate(-720deg)";
+                }
+            }
+            else{
+                this.style.WebkitTransform="rotate(0deg)";
+                for(var i=0;i<oImg.length;i++)
+                {
+                    oImg[i].style.left=0+"px";
+                    oImg[i].style.top=0+"px";
+                    oImg[i].style.transition="0.5s "+(oImg.length-i-1)*100+"ms";
+                    oImg[i].style.WebkitTransform="scale(1) rotate(0deg)";
+                }
+            }
+            btns=!btns;
+        };
+        function toLine(R,deg)
+        {
+            return {1:Math.round(Math.sin(Math.PI*deg/180)*R),2:Math.round(Math.cos(Math.PI*deg/180)*R)}
+        }
+        function end(){
+            this.style.transition="0.1s";
+            this.style.WebkitTransform="scale(1) rotate(-720deg)";
+            this.style.opacity=1;
+            removeEnd(this,end);
+
+        }
+        function addEnd(obj,fn){
+            obj.addEventListener("WebkitTransitionEnd",fn,false);
+            obj.addEventListener("transitionend",fn,false);
+        }
+        function removeEnd(obj,fn){
+            obj.removeEventListener("WebkitTransitionEnd",fn,false);
+            obj.removeEventListener("transitionend",fn,false);
+        }
+    }
+    function fn4(){
+        var p=document.getElementById("container_4");
+        var oDiv=document.getElementById("div1");
+        var oSpan=oDiv.getElementsByTagName("span")[0];
+        var oDiv2=document.getElementById("div2");
+        var oImg=document.getElementById("div2").getElementsByTagName("img")[0];
+        oDiv.onmouseenter=function(){
+            oSpan.style.display="block";
+            oDiv2.style.display="block";
+
+        };
+        oDiv.onmouseleave=function(){
+            oSpan.style.display="none";
+            oDiv2.style.display="none";
+        };
+        oDiv.onmousemove=function(event){
+            var event=event||window.event;
+            var disX=event.clientX-oDiv.offsetLeft- p.offsetLeft-oSpan.offsetWidth/2;
+            var disY=event.clientY-oDiv.offsetTop-p.offsetTop-oSpan.offsetHeight/2;
+            if(disX<0)
+            {
+                disX=0;
+            }else if(disX>oDiv.offsetWidth-oSpan.offsetWidth)
+            {
+                disX=oDiv.offsetWidth-oSpan.offsetWidth;
+            }
+            if(disY<0)
+            {
+                disT=0;
+            }else if(disY>oDiv.offsetHeight-oSpan.offsetHeight)
+            {
+                disY=oDiv.offsetHeight-oSpan.offsetHeight;
+            }
+            oSpan.style.left=disX+"px";
+            oSpan.style.top=disY+"px";
+            var scaleX=disX/(oDiv.offsetWidth-oSpan.offsetWidth);
+            var scaleY=disY/(oDiv.offsetHeight-oSpan.offsetHeight);
+            oImg.style.top=-scaleY*(oImg.offsetHeight-oDiv2.offsetHeight)+"px";
+            oImg.style.left=-scaleX*(oImg.offsetWidth-oDiv2.offsetWidth)+"px";
+        }
+    }
+</script>
+</body>
+</html>

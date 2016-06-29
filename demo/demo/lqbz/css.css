@@ -1,0 +1,139 @@
+
+/*钟表效果*/
+#container_1{
+    display: block;
+    position: relative;
+    margin:200px auto;
+    width:200px;
+    height:200px;
+    border-radius: 50%;
+    border:2px solid black;
+}
+#container_1 ul{
+    list-style: none;
+    position: relative;
+    margin:0;padding:0;
+    width:200px;height:200px;
+    list-style: none;
+}
+#container_1 ul li{
+    position: absolute;
+    width:2px;
+    height:6px;
+    left:99px;
+    top:0;
+    background: black;
+    transform-origin:center 100px;
+    -webkit-transform-origin: center 100px;
+    -ms-transform-origin: center 100px;
+    -moz-transform-origin: center 100px;
+    -o-transform-origin: center 100px;
+}
+#container_1 ul li:nth-of-type(5n+1){
+    height:12px;
+}
+#hour{
+    width:6px;height:45px;position: absolute;background: black;
+    left:97px;top:55px;
+    -webkit-transform-origin: center bottom;
+    -ms-transform-origin: center bottom;
+    -moz-transform-origin: center bottom;
+    -o-transform-origin: center bottom;
+}
+#minu{width:4px;height:65px;position: absolute;background: green;
+    left:98px;top:35px;
+    -webkit-transform-origin: center bottom;
+    -ms-transform-origin: center bottom;
+    -moz-transform-origin: center bottom;
+    -o-transform-origin: center bottom;}
+#sec{width:2px;height:80px;position: absolute;background: red;
+    left:99px;top:20px;
+    -webkit-transform-origin: center bottom;
+    -ms-transform-origin: center bottom;
+    -moz-transform-origin: center bottom;
+    -o-transform-origin: center bottom;}
+#icon{
+    width:20px;
+    height:20px;
+    background: black;
+    position: absolute;
+    top:90px;
+    left:90px;
+    border-radius: 50%;
+    padding:0;
+    margin:0;
+    transform: rotate(deg);
+    -webkit-transform:rotate(deg) ;
+    -moz-transform: rotate(deg);
+    -ms-transform: rotate(deg);
+    -o-transform: rotate(deg);
+}
+/*苹果菜单导航*/
+#container_2{
+    position: absolute;
+    width:100%;
+    bottom:50px;height:auto;
+    text-align: center;
+}
+#container_2 img{
+    width:64px;
+}
+/*扇形导航菜单*/
+#container_3{
+    position: fixed;
+    right:0;
+    bottom: 0;
+    width:50px;height:50px;
+}
+#menu_list{
+    width:42px;
+    height:42px;
+    position: relative;
+    margin:4px;
+}
+#menu_list img{
+    border-radius: 21px;
+    position: absolute;
+    left:0;
+    top:0;
+    -webkit-transition: 0.5s all ease;
+}
+#home{
+    width:50px;height:50px;
+    background: url("images/home.png") no-repeat;
+    position: absolute;
+    top:0;
+    left:0;
+    transition: 1s;
+}
+
+#container_4{
+    position: absolute;
+    top:100px;
+    left:100px;
+}
+#container_4 #div1{
+    width:180px;height:180px;
+    overflow: hidden;
+    position: relative;
+}
+#div1 span{
+    width:100px;height:100px;
+    background: yellow;
+    opacity: 0.5;
+    position: absolute;
+    left:0;
+    top:0;
+    display: none;
+}
+#div2{
+    width:500px;height:500px;
+    position: absolute;
+    left:600px;top:50px;overflow: hidden;
+    display: none;
+}
+#div2 img{
+    position: absolute;
+    top:0;
+    left:0;
+}
