@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        html,body{
+            height: 100%;
+            background:url("image/bg.jpg") repeat;
+        }
+        *{margin:0;
+        padding:0}
+        #container{
+            list-style: none;
+            width:660px;
+            position: relative;
+            margin:30px auto;
+            padding:0;
+            background: white;
+        }
+        #container li{
+            display: block;
+            float: left;
+            margin:10px;
+            width:200px;
+            height:150px;
+            background: white;
+        }
+        li:hover{
+            cursor: pointer;
+        }
+        #container li img{
+            width:200px;
+            height:150px;
+        }
+        #bt{
+            width:100px;
+            height:100px;
+            border-radius: 50%;
+            background: rgba(104,171,194,0.5);
+            font-size: larger;
+            color:white;
+            box-shadow: none;
+            border:none;
+            position: absolute;
+            top:30%;
+            left:200px;
+        }
+        #bt:hover{
+            cursor: pointer;
+        }
+		div{
+		position:absolute;
+		right:20px;
+		bottom:50px;
+		padding:50px;}
+    </style>
+</head>
+<body>
+<ul id="container">
+    <li><img src="image/1.jpg"></li>
+    <li><img src="image/2.jpg"></li>
+    <li><img src="image/3.jpg"></li>
+    <li><img src="image/4.jpg"></li>
+    <li><img src="image/5.jpg"></li>
+    <li><img src="image/6.jpg"></li>
+    <li><img src="image/7.jpg"></li>
+    <li><img src="image/8.jpg"></li>
+    <li><img src="image/9.jpg"></li>
+</ul>
+<input type="button" id="bt" value="随机重置">
+<div>
+<h5>return false</h5>
+<p>这里需要阻止浏览器的默认行为，注意return false 包括了event.preventDefault()和event.stopPropagation()</p>
+<h5>getComputedStyle currentStyle </h5>
+<p>用document.getElementById(‘element').style.xxx可以获取元素的样式信息，可是它获取的只是DOM元素style属性里的样式规则，对于通过class属性引用的外部样式表，就拿不到我们要的信息了。 
+DOM标准里有个全局方法getComputedStyle，可以获取到当前对象样式规则信息，如：getComputedStyle(obj,null).paddingLeft，就能获取到对象的左内边距。但是事情还没完，万恶的IE不支持此方法，它有自己的一个实现方式，那就是currentStyle，不同于全局方法getComputedStyle，它是作为DOM元素属性存在的，如：obj.currentStyle.paddingLeft，在IE中就获取到对象的左内边距了，兼容性的写法如下： 
+复制代码 代码如下:return window.getComputedStyle ? window.getComputedStyle(obj,null).paddingLeft : obj.currentStyle.paddingLeft; 这样，就能在IE及FF中返回对象的当前样式信息了。 </p>
+</div>
+<script src="move.js"></script>
+<script>
+    var oLi=document.getElementsByTagName("li");
+    var oLen=oLi.length;
+    var arr=[];
+    var izIndex=2;
+    var btn=document.getElementById("bt");
+    for(var i=0;i<oLen;i++){
+        arr.push([oLi[i].offsetLeft,oLi[i].offsetTop])
+    }
+    for(var i=0;i<oLen;i++)
+    {
+        oLi[i].style.position="absolute";
+        oLi[i].style.left=arr[i][0]+"px";
+        oLi[i].style.top=arr[i][1]+"px";
+        oLi[i].style.margin=0+"px";
+    }
+    for(var i=0;i<oLen;i++)
+    {
+        oLi[i].index=i;
+        drag(oLi[i]);
+    }
+    btn.onclick=function(){
+        var randomArr=[0,1,2,3,4,5,6,7,8,9];
+        randomArr.sort(function(n1,n2){
+            return Math.random()-0.5;
+        });
+        for(var i=0;i<oLen;i++){
+            startMove(oLi[i],{left:arr[randomArr[i]][0],top:arr[randomArr[i]][1]});
+            oLi[i].index=randomArr[i];
+        }
+    };
+    function drag(obj)
+    {
+        var pageX=0;
+        var pageY=0;
+        obj.onmousedown=function(event){
+            var event=event||window.event;
+            obj.style.zIndex=izIndex++;
+            pageX=event.clientX-obj.offsetLeft;
+            pageY=event.clientY-obj.offsetTop;
+            document.onmousemove=function(event){
+                var event=event||window.event;
+                obj.style.left=event.clientX-pageX+"px";
+                obj.style.top=event.clientY-pageY+"px";
+                for(var i=0;i<oLen;i++)
+                {
+                    oLi[i].style.webkitTransform="";
+                    oLi[i].style.boxShadow="";
+                }
+                var nl=nearFind(obj);
+                if(nl)
+                {
+                    nl.style.webkitTransform="scale(1.05)";
+                    nl.style.boxShadow="5px 5px 5px yellow";
+                }
+            };
+            document.onmouseup=function(){
+                document.onmousemove=null;
+                document.onmouseup=null;
+                var nl=nearFind(obj);
+                var tmp=0;
+                if(nl){
+                    startMove(obj,{left:arr[nl.index][0],top:arr[nl.index][1]});
+                    startMove(nl,{left:arr[obj.index][0],top:arr[obj.index][1]});
+                    nl.style.webkitTransform="";
+                    nl.style.boxShadow="";
+                    tmp=obj.index;
+                    obj.index=nl.index;
+                    nl.index=tmp;
+
+                }else
+                {
+                    startMove(obj,{left:arr[obj.index][0],top:arr[obj.index][1]});
+                }
+            };
+            //这里需要阻止浏览器的默认行为（不明白为什么）)，注意return false 包括了event.preventDefault()和event.stopPropagation();
+            event.preventDefault();
+        }
+    }
+    //碰撞检测
+    function pzCheck(obj1,obj2)
+    {
+        var L1=obj1.offsetLeft;
+        var R1=obj1.offsetLeft+obj1.offsetWidth;
+        var T1=obj1.offsetTop;
+        var B1=obj1.offsetTop+obj1.offsetHeight;
+
+        var L2=obj2.offsetLeft;
+        var R2=obj2.offsetLeft+obj2.offsetWidth;
+        var T2=obj2.offsetTop;
+        var B2=obj2.offsetTop+obj2.offsetHeight;
+        //这几种情况表示没有碰撞
+        if(R1<L2||R2<L1||T1>B2||B1<T2)
+        {
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+    //获取距离他最近的图片
+    function nearFind(obj)
+    {
+        var index=-1;
+        var s=9999;
+        for(var i=0;i<oLen;i++)
+        {
+            if(obj!=oLi[i]&&pzCheck(obj,oLi[i]))
+            {
+                if(distance(obj,oLi[i])<s)
+                {
+                    s=distance(obj,oLi[i]);
+                    index=i;
+                }
+            }
+        }
+        if(index!=-1)
+        {
+            return oLi[index];
+        }
+        else
+        {
+            return false;
+        }
+    }
+    //求解两个图片之间的距离
+    function distance(obj1,obj2){
+        var a=obj1.offsetLeft-obj2.offsetLeft;
+        var b=obj1.offsetTop-obj2.offsetTop;
+        return Math.sqrt(a*a+b*b);
+    }
+</script>
+</body>
+</html>
